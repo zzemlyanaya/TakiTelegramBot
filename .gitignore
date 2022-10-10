@@ -8,6 +8,7 @@
 *.iws
 *.iml
 *.ipr
+*.properties
 
 ### Eclipse ###
 .settings/
@@ -56,3 +57,4 @@ hs_err_pid*
 # Temp folders
 target/
 out/
+/TakiTheBot
