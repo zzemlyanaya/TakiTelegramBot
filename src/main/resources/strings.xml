@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+    <entry key="DefaultErrorMessage">Упс, что-то пошло не так! Попробуй ещё раз?</entry>
+    <entry key="StartMessageFirst">Привет! Меня зовут Таки</entry>
+    <entry key="StartMessageSecond">Я твой проводник на пути формирование привычек! Начнём?</entry>
+
+    <entry key="UnknownCommandMessage">Я не знаю, что сказать :(\nПопробуй ещё раз?</entry>
+    
+    <entry key="AddFlowFirstMessage">Отлично!</entry>
+    <entry key="ChooseHabitType">Для начала выбери тип привычки:</entry>
+    <entry key="HabitTypeBinary">Да-Нет-ка</entry>
+    <entry key="HabitTypeMeasurable">Измеримая</entry>
+    <entry key="EnterHabitName">Придумай название:</entry>
+    <entry key="EnterHabitPrompt">И вопрос:\n(например, ты гулял сегодня?)</entry>
+    <entry key="EnterMeasurements">Задай единицы измерения:</entry>
+    <entry key="EnterGoal">И цель (число!):</entry>
+    <entry key="ErrorNotNumber">Кажется, это не число. Попробуйте ещё раз?</entry>
+    <entry key="EnterFrequency">А теперь частоту:</entry>
+    <entry key="FrequencyEveryday">Каждый день</entry>
+    <entry key="FrequencyOnceNDay">Раз в N дней</entry>
+    <entry key="EnterN">Введи N</entry>
+    <entry key="AddFlowSuccess">Ура! Вы на пути к лучшей версии себя!</entry>
+
+
+    <entry key="CheckFlowFirstMessage">This is CHECK ability!</entry>
+    <entry key="TodayFlowFirstMessage">This is TODAY ability!</entry>
+    <entry key="StatisticFlowFirstMessage">This is STATISTIC ability!</entry>
+</properties>

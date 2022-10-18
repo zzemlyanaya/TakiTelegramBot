@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="ru.zzemlyanaya.takibot.data.dao.UserDao">
+
+    <update id="createTable">
+        CREATE TABLE IF NOT EXISTS `users` (
+            `id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+            `platformId` INTEGER,
+            `username` TEXT,
+            UNIQUE (id, platformId)
+        )
+    </update>
+
+    <update id="dropTable">
+        drop table if exists users
+    </update>
+
+    <select id="selectById" resultType="User">
+        select * from users where id = #{id} limit 1
+    </select>
+
+    <select id="selectByPlatformId" resultType="User">
+        select * from users where platformId = #{id} limit 1
+    </select>
+
+    <delete id="deleteById">
+        delete from users where id = #{id}
+    </delete>
+
+    <delete id="deleteByPlatformId">
+        delete from users where platformId = #{id}
+    </delete>
+
+    <insert id="insert" useGeneratedKeys="true">
+        insert or ignore into users (platformId, username) values (#{platformId}, #{username})
+    </insert>
+
+    <update id="update">
+        update users set platformId = #{platformId}, username = #{username} where id = #{id}
+    </update>
+</mapper>

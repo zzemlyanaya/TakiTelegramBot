@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="ru.zzemlyanaya.takibot.data.dao.HabitDao">
+
+    <update id="createTable">
+        CREATE TABLE IF NOT EXISTS `habits` (
+            `id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+            `userId` INTEGER,
+            `name`  TEXT,
+            `prompt`  TEXT,
+            `isBinary`  BOOLEAN,
+            `frequency` INTEGER,
+            `metric` TEXT,
+            `metricGoal` REAL
+        )
+    </update>
+
+    <update id="dropTable">
+        drop table if exists habits
+    </update>
+
+    <select id="selectById" resultType="Habit">
+        select * from habits where id = #{id} limit 1
+    </select>
+
+    <select id="selectByUserId" resultType="Habit">
+        select * from habits where userId = #{id}
+    </select>
+
+    <delete id="deleteById">
+        delete from habits where id = #{id}
+    </delete>
+
+    <insert id="insert" useGeneratedKeys="true">
+        insert into habits (userId, name, prompt, isBinary, frequency, metric, metricGoal)
+        values (#{userId}, #{name}, #{prompt}, #{isBinary}, #{frequency}, #{metric}, #{metricGoal})
+    </insert>
+</mapper>
