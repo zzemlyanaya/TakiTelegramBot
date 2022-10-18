@@ -12,15 +12,15 @@ import ru.zzemlyanaya.takibot.domain.bot.TakiBot;
 
 public class Application {
     private static final String LOG_TAG = "-----TAKI-LOG-MAIN";
-    private static final Logger LOGGER = LogManager.getLogger();
-    
+    private static final Logger log = LogManager.getLogger();
+
     public static void main(String[] args) {
         BasicConfigurator.configure();
 
         try {
             new TelegramBotsApi(DefaultBotSession.class).registerBot(new TakiBot());
         } catch (TelegramApiException e) {
-            LOGGER.error(LOG_TAG, e);
+            log.error(LOG_TAG, e);
         }
     }
 }
