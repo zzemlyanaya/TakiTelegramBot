@@ -3,9 +3,9 @@ package ru.zzemlyanaya.takibot.data.model;
 /* created by zzemlyanaya on 26/10/2022 */
 
 public class User {
-    Long id;
-    Long platformId;
-    String username;
+    private Long id;
+    private Long platformId;
+    private String username;
 
     public User(Long id, Long platformId, String username) {
         this.id = id;

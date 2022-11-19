@@ -35,6 +35,16 @@ public class HabitDaoTestImpl extends BaseDao<HabitDao> implements HabitDao {
     }
 
     @Override
+    public List<Habit> selectByUserAndDate(Long id, String date) {
+        return select(habitDao -> habitDao.selectByUserAndDate(id, date));
+    }
+
+    @Override
+    public Integer setNextDate(Long id, String nextDate) {
+        return execute(habitDao -> habitDao.setNextDate(id, nextDate));
+    }
+
+    @Override
     public Integer deleteById(Long id) {
         return execute(habitDao -> habitDao.deleteById(id));
     }

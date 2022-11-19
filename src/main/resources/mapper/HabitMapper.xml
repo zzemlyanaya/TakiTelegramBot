@@ -14,7 +14,8 @@
             `isBinary`  BOOLEAN,
             `frequency` INTEGER,
             `metric` TEXT,
-            `metricGoal` REAL
+            `metricGoal` REAL,
+            `nextDate` TEXT
         )
     </update>
 
@@ -30,12 +31,20 @@
         select * from habits where userId = #{id}
     </select>
 
+    <select id="selectByUserAndDate" resultType="Habit">
+        select * from habits where userId = #{id} and nextDate between date(#{date}, '-30 days') and date(#{date})
+    </select>
+
+    <update id="setNextDate">
+        update habits set nextDate = #{nextDate} where id = #{id}
+    </update>
+
     <delete id="deleteById">
         delete from habits where id = #{id}
     </delete>
 
     <insert id="insert" useGeneratedKeys="true">
-        insert into habits (userId, name, prompt, isBinary, frequency, metric, metricGoal)
-        values (#{userId}, #{name}, #{prompt}, #{isBinary}, #{frequency}, #{metric}, #{metricGoal})
+        insert or ignore into habits (userId, name, prompt, isBinary, frequency, metric, metricGoal, nextDate)
+        values (#{userId}, #{name}, #{prompt}, #{isBinary}, #{frequency}, #{metric}, #{metricGoal}, #{nextDate})
     </insert>
 </mapper>

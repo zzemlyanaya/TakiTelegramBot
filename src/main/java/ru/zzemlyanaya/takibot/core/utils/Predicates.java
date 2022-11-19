@@ -2,6 +2,7 @@ package ru.zzemlyanaya.takibot.core.utils;
 
 /* created by zzemlyanaya on 18/10/2022 */
 
+import org.apache.commons.lang3.StringUtils;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import ru.zzemlyanaya.takibot.domain.utils.Command;
@@ -22,10 +23,23 @@ public class Predicates {
     }
 
     @NotNull
+    public static Predicate<Update> hasNumericMessage() {
+        return upd -> upd.hasMessage() && StringUtils.isNumeric(upd.getMessage().getText());
+    }
+
+    @NotNull
     public static Predicate<Update> isReplyToMessage(String message) {
         return upd -> {
             Message reply = upd.getMessage().getReplyToMessage();
-            return reply != null && reply.hasText() && reply.getText().equals(message);
+            return reply != null && reply.hasText() && reply.getText().equalsIgnoreCase(message);
+        };
+    }
+
+    @NotNull
+    public static Predicate<Update> isReplyToMessageWith(String message) {
+        return upd -> {
+            Message reply = upd.getMessage().getReplyToMessage();
+            return reply != null && reply.hasText() && reply.getText().contains(message);
         };
     }
 }

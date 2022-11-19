@@ -2,8 +2,12 @@ package ru.zzemlyanaya.takibot.domain.utils;
 
 /* created by zzemlyanaya on 10/10/2022 */
 
+import org.telegram.telegrambots.meta.api.objects.commands.BotCommand;
+
 import java.util.Arrays;
+import java.util.List;
 import java.util.function.Predicate;
+import java.util.stream.Stream;
 
 public enum Command {
     START("start", "start"),
@@ -41,6 +45,12 @@ public enum Command {
         }
     }
 
+    public static List<BotCommand> getBotCommands() {
+       return getUserCommands().map(
+           command -> new BotCommand(command.getName(), command.getBtnName())
+       ).toList();
+    }
+
     private static Predicate<Command> matchName(String msg) {
         return command -> getFullCommand(command).equalsIgnoreCase(msg)
             || command.btnName.equalsIgnoreCase(msg);
@@ -48,5 +58,9 @@ public enum Command {
 
     private static String getFullCommand(Command command) {
         return "/" + command.name;
+    }
+
+    private static Stream<Command> getUserCommands() {
+        return Stream.of(ADD, CHECK, TODAY, STATISTIC);
     }
 }

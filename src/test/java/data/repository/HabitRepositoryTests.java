@@ -14,6 +14,8 @@ import ru.zzemlyanaya.takibot.data.repository.HabitRepository;
 import ru.zzemlyanaya.takibot.domain.model.HabitEntity;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -75,6 +77,22 @@ public class HabitRepositoryTests {
                 .doOnError(log::error)
                 .subscribe(habits -> {
                     for (int i = 0; i < habits.size(); i++) {
+                        assertEquals(expected.get(i).getName(), habits.get(i).getName());
+                    }
+                })
+        );
+    }
+
+    @ParameterizedTest(name = "select by date: {0}")
+    @MethodSource("data.providers.HabitTestProvider#provideTestsHabitSelectByUserAndDate")
+    @Order(4)
+    public void getHabitsByUserAndDate(Long id, String date, List<Habit> expected) throws IOException {
+        disposable.add(
+            repo.getHabitsByUserAndDate(id, LocalDate.parse(date, DateTimeFormatter.ISO_DATE))
+                .doOnError(log::error)
+                .subscribe(habits -> {
+                    for (int i = 0; i < habits.size(); i++) {
+                        assertEquals(expected.get(i).getUserId(), habits.get(i).getUserId());
                         assertEquals(expected.get(i).getName(), habits.get(i).getName());
                     }
                 })

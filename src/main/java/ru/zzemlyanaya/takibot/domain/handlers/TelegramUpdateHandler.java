@@ -17,11 +17,13 @@ public class TelegramUpdateHandler implements UpdateHandler<Update> {
     private final StartHandler startHandler;
     private final MessageEventHandler messageHandler;
     private final AddHabitHandler addHabitHandler;
+    private final CheckHabitHandler checkHabitHandler;
 
     public TelegramUpdateHandler(SilentSender silent, DBContext dbContext) {
         startHandler = new StartHandler(silent);
         messageHandler = new MessageEventHandler(silent);
         addHabitHandler = new AddHabitHandler(silent, dbContext);
+        checkHabitHandler = new CheckHabitHandler(silent, dbContext);
     }
 
     @Override
@@ -48,6 +50,7 @@ public class TelegramUpdateHandler implements UpdateHandler<Update> {
         return builder
             .add(startHandler)
             .add(addHabitHandler)
+            .add(checkHabitHandler)
             .build();
     }
 }

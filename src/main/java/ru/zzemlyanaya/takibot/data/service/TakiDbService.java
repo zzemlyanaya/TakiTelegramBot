@@ -5,9 +5,12 @@ package ru.zzemlyanaya.takibot.data.service;
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Single;
 import ru.zzemlyanaya.takibot.data.model.User;
+import ru.zzemlyanaya.takibot.domain.model.CheckModel;
+import ru.zzemlyanaya.takibot.domain.model.EntryEntity;
 import ru.zzemlyanaya.takibot.domain.model.HabitEntity;
 import ru.zzemlyanaya.takibot.domain.model.UserEntity;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface TakiDbService {
@@ -23,5 +26,13 @@ public interface TakiDbService {
     // Habits
     Single<HabitEntity> getHabitById(Long id);
     Single<List<HabitEntity>> getHabitsByUserId(Long id);
+    Single<List<HabitEntity>> getHabitsByUserAndDate(Long id, LocalDate date);
     Completable saveHabit(HabitEntity habit);
+
+    // Entries
+    Completable saveEntry(EntryEntity entry);
+    Completable updateEntry(EntryEntity entry);
+
+    // Transactions
+    Completable runCheckTransaction(CheckModel checkModel);
 }

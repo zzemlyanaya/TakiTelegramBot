@@ -3,9 +3,8 @@ package ru.zzemlyanaya.takibot.domain.model;
 /* created by zzemlyanaya on 08/11/2022 */
 
 public class UserEntity {
-
-    Long platformId;
-    String username;
+    private Long platformId;
+    private String username;
 
     public UserEntity(Long platformId, String username) {
         this.platformId = platformId;

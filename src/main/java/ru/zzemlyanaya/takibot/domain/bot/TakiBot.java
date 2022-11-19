@@ -2,7 +2,9 @@ package ru.zzemlyanaya.takibot.domain.bot;
 
 import org.telegram.abilitybots.api.bot.AbilityBot;
 import org.telegram.abilitybots.api.objects.Ability;
+import org.telegram.telegrambots.meta.api.methods.commands.SetMyCommands;
 import org.telegram.telegrambots.meta.api.objects.Update;
+import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import ru.zzemlyanaya.takibot.core.handlers.UpdateHandler;
 import ru.zzemlyanaya.takibot.core.utils.ConfigReader;
 import ru.zzemlyanaya.takibot.core.utils.XmlResourceBundleControl;
@@ -27,8 +29,12 @@ public class TakiBot extends AbilityBot {
 
     private final UpdateHandler<Update> handler = new TelegramUpdateHandler(silent(), db());
 
-    public TakiBot() {
+    public TakiBot() throws TelegramApiException {
         super(BOT_TOKEN, BOT_USERNAME);
+
+        SetMyCommands commands = new SetMyCommands();
+        commands.setCommands(Command.getBotCommands());
+        this.execute(commands);
     }
 
     @Override
@@ -54,13 +60,7 @@ public class TakiBot extends AbilityBot {
     }
 
     public Ability checkHabit() {
-        return Ability
-            .builder()
-            .name(Command.CHECK.getName())
-            .locality(ALL)
-            .privacy(PUBLIC)
-            .action(ctx -> silent.send(res.getString("CheckFlowFirstMessage"), ctx.chatId()))
-            .build();
+        return handler.getHandler(Command.CHECK).startFlow();
     }
 
     public Ability showStatisticToday() {

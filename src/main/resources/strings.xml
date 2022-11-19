@@ -23,7 +23,13 @@
     <entry key="AddFlowSuccess">Ура! Вы на пути к лучшей версии себя!</entry>
 
 
-    <entry key="CheckFlowFirstMessage">This is CHECK ability!</entry>
+    <entry key="CheckFlowFirstMessage">Внести данные о привычке можно один раз в день!</entry>
+    <entry key="ChooseHabit">Выбери привычку:\n\n</entry>
+    <entry key="EnterAnswerIn">Введите ответ в </entry>
+    <entry key="CheckFlowSuccessMessage">Записали!</entry>
+    <entry key="CheckFlowProgressMessage">Следите за вашим прогрессом в разделах “Сегодня” или “Статистика”</entry>
+
+
     <entry key="TodayFlowFirstMessage">This is TODAY ability!</entry>
     <entry key="StatisticFlowFirstMessage">This is STATISTIC ability!</entry>
 </properties>

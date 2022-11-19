@@ -2,16 +2,21 @@ package ru.zzemlyanaya.takibot.domain.model;
 
 /* created by zzemlyanaya on 08/11/2022 */
 
-public class HabitEntity {
-    Long userId;
-    String name;
-    String prompt;
-    Boolean isBinary;
-    int frequency;
-    String metric;
-    double metricGoal;
+import java.time.LocalDate;
 
-    public HabitEntity(Long userId, String name, String prompt, Boolean isBinary, int frequency, String metric, double metricGoal) {
+public class HabitEntity {
+    private Long id;
+    private Long userId;
+    private String name;
+    private String prompt;
+    private Boolean isBinary;
+    private int frequency;
+    private String metric;
+    private double metricGoal;
+    private LocalDate nextDate;
+
+    public HabitEntity(Long id, Long userId, String name, String prompt, Boolean isBinary, int frequency, String metric, double metricGoal, LocalDate nextDate) {
+        this.id = id;
         this.userId = userId;
         this.name = name;
         this.prompt = prompt;
@@ -19,6 +24,7 @@ public class HabitEntity {
         this.frequency = frequency;
         this.metric = metric;
         this.metricGoal = metricGoal;
+        this.nextDate = nextDate;
     }
 
     public HabitEntity() {
@@ -29,11 +35,33 @@ public class HabitEntity {
         this.frequency = 0;
         this.metric = "";
         this.metricGoal = 0d;
+        this.nextDate = LocalDate.now();
+    }
+
+    public HabitEntity(Long id, Long userId, String name, LocalDate nextDate) {
+        this.id = id;
+        this.userId = userId;
+        this.name = name;
+        this.nextDate = nextDate;
+    }
+
+    public HabitEntity(Long userId, String name, LocalDate nextDate) {
+        this.userId = userId;
+        this.name = name;
+        this.nextDate = nextDate;
     }
 
     public HabitEntity(Long userId, String name) {
         this.userId = userId;
         this.name = name;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Long getUserId() {
@@ -90,5 +118,13 @@ public class HabitEntity {
 
     public void setMetricGoal(double metricGoal) {
         this.metricGoal = metricGoal;
+    }
+
+    public LocalDate getNextDate() {
+        return nextDate;
+    }
+
+    public void setNextDate(LocalDate nextDate) {
+        this.nextDate = nextDate;
     }
 }
