@@ -70,10 +70,24 @@ public class HabitDaoTests {
         }
     }
 
+    @ParameterizedTest(name = "select by date: {0}")
+    @MethodSource("data.providers.HabitTestProvider#provideTestsHabitSelectByUserAndDate")
+    @Order(5)
+    public void selectHabitsByUserAndDate(Long id, String date, List<Habit> expected) throws IOException {
+        List<Habit> habits = dao.selectByUserAndDate(id, date);
+        System.out.println(habits.toString());
+
+        for (int i = 0; i < habits.size(); i++) {
+            assertEquals(expected.get(i).getUserId(), habits.get(i).getUserId());
+            assertEquals(expected.get(i).getName(), habits.get(i).getName());
+            assertEquals(expected.get(i).getNextDate(), habits.get(i).getNextDate());
+        }
+    }
+
     @ParameterizedTest(name = "delete: {0}")
     @MethodSource("data.providers.HabitTestProvider#provideTestsHabitDelete")
-    @Order(5)
-    public void deleteUsers(Long id) throws IOException {
+    @Order(6)
+    public void deleteHabits(Long id) throws IOException {
         dao.deleteById(id);
         Habit habit = dao.selectById(id);
 

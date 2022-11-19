@@ -21,6 +21,8 @@ import ru.zzemlyanaya.takibot.domain.model.HabitEntity;
 import ru.zzemlyanaya.takibot.domain.utils.Command;
 import ru.zzemlyanaya.takibot.domain.utils.KeyboardFactory;
 
+import java.time.LocalDate;
+
 import static org.telegram.abilitybots.api.objects.Locality.ALL;
 import static org.telegram.abilitybots.api.objects.Privacy.PUBLIC;
 import static ru.zzemlyanaya.takibot.core.utils.Predicates.*;
@@ -188,7 +190,7 @@ public class AddHabitHandler implements CoreHandler {
 
     private Reply onFrequencyEverydayChosen(HabitEntity habit) {
         return Reply.of((bot, upd) -> {
-                habit.setFrequency(0);
+                habit.setFrequency(1);
                 saveHabit(upd, habit);
             },
             hasMessageWith(ResourceProvider.getString("FrequencyEveryday"))
@@ -200,7 +202,6 @@ public class AddHabitHandler implements CoreHandler {
             .builder(db)
             .onlyIf(hasMessageWith(ResourceProvider.getString("FrequencyOnceNDay")))
             .action((bot, upd) -> {
-                habit.setMetric(upd.getMessage().getText());
                 silent.forceReply(ResourceProvider.getString("EnterN"), AbilityUtils.getChatId(upd));
             })
             .next(getFrequencyN(habit))
@@ -213,6 +214,7 @@ public class AddHabitHandler implements CoreHandler {
                 String n = upd.getMessage().getText();
                 if (StringUtils.isNumeric(n)) {
                     habit.setFrequency(Integer.parseInt(n));
+                    habit.setNextDate(LocalDate.now());
                     saveHabit(upd, habit);
                 } else {
                     sendErrorMessage(AbilityUtils.getChatId(upd));

@@ -3,14 +3,19 @@ package ru.zzemlyanaya.takibot.data.service.impl;
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Single;
 import ru.zzemlyanaya.takibot.data.model.User;
+import ru.zzemlyanaya.takibot.data.repository.EntryRepository;
 import ru.zzemlyanaya.takibot.data.repository.HabitRepository;
 import ru.zzemlyanaya.takibot.data.repository.UserRepository;
+import ru.zzemlyanaya.takibot.data.repository.impl.EntryRepositoryImpl;
 import ru.zzemlyanaya.takibot.data.repository.impl.HabitRepositoryImpl;
 import ru.zzemlyanaya.takibot.data.repository.impl.UserRepositoryImpl;
 import ru.zzemlyanaya.takibot.data.service.TakiDbService;
+import ru.zzemlyanaya.takibot.domain.model.CheckModel;
+import ru.zzemlyanaya.takibot.domain.model.EntryEntity;
 import ru.zzemlyanaya.takibot.domain.model.HabitEntity;
 import ru.zzemlyanaya.takibot.domain.model.UserEntity;
 
+import java.time.LocalDate;
 import java.util.List;
 
 /* created by zzemlyanaya on 08/11/2022 */
@@ -21,12 +26,14 @@ public class TakiDbServiceImpl implements TakiDbService {
 
     private final UserRepository userRepository = UserRepositoryImpl.INSTANCE;
     private final HabitRepository habitRepository = HabitRepositoryImpl.INSTANCE;
+    private final EntryRepository entryRepository = EntryRepositoryImpl.INSTANCE;
 
     @Override
     public Completable initDb() {
         return Completable.mergeArray(
             userRepository.createUsersTable(),
-            habitRepository.createHabitsTable()
+            habitRepository.createHabitsTable(),
+            entryRepository.createEntriesTable()
         );
     }
 
@@ -47,7 +54,6 @@ public class TakiDbServiceImpl implements TakiDbService {
     }
 
     // ------ Habits ------
-
     @Override
     public Single<HabitEntity> getHabitById(Long id) {
         return habitRepository.getHabitById(id);
@@ -59,7 +65,38 @@ public class TakiDbServiceImpl implements TakiDbService {
     }
 
     @Override
+    public Single<List<HabitEntity>> getHabitsByUserAndDate(Long id, LocalDate date) {
+        return habitRepository.getHabitsByUserAndDate(id, date);
+    }
+
+    @Override
     public Completable saveHabit(HabitEntity habit) {
         return habitRepository.saveHabit(habit);
+    }
+
+    private Completable setNextDate(HabitEntity habit) {
+        LocalDate nextDate = habit.getNextDate().plusDays(habit.getFrequency());
+        return habitRepository.setNextDate(habit.getId(), nextDate);
+    }
+
+    // ------ Entries ------
+
+    @Override
+    public Completable saveEntry(EntryEntity entry) {
+        return entryRepository.saveEntry(entry);
+    }
+
+    @Override
+    public Completable updateEntry(EntryEntity entry) {
+        return entryRepository.updateEntry(entry);
+    }
+
+    // ------ Transactions ------
+
+    public Completable runCheckTransaction(CheckModel checkModel) {
+        return Completable.mergeArray(
+            saveEntry(checkModel.getEntry()),
+            setNextDate(checkModel.getHabit())
+        );
     }
 }

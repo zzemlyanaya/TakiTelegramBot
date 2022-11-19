@@ -40,5 +40,6 @@
     <mappers>
         <mapper resource="mapper/UserMapper.xml"/>
         <mapper resource="mapper/HabitMapper.xml"/>
+        <mapper resource="mapper/EntryMapper.xml"/>
     </mappers>
 </configuration>

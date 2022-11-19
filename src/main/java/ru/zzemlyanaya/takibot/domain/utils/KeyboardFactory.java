@@ -58,4 +58,25 @@ public class KeyboardFactory {
 
         return keyboardMarkup;
     }
+
+    public static ReplyKeyboard getNumericKeyboard(int max) {
+        ReplyKeyboardMarkup keyboardMarkup = new ReplyKeyboardMarkup();
+        keyboardMarkup.setOneTimeKeyboard(true);
+
+        List<KeyboardRow> keyboard = new ArrayList<>();
+        KeyboardRow row = new KeyboardRow();
+
+        int rowLength = (int) Math.ceil(max/3.0);
+        for (int i = 1; i <= max; i++) {
+            row.add(String.valueOf(i));
+            if (i % rowLength == 0) {
+                keyboard.add(row);
+                row = new KeyboardRow();
+            }
+        }
+        keyboard.add(row);
+        keyboardMarkup.setKeyboard(keyboard);
+
+        return keyboardMarkup;
+    }
 }

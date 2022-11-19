@@ -1,5 +1,6 @@
 package data.service;
 
+import data.dao.testImpl.EntryDaoTestImpl;
 import data.dao.testImpl.HabitDaoTestImpl;
 import data.dao.testImpl.UserDaoTestImpl;
 import data.service.testImpl.TakiDbServiceTestImpl;
@@ -9,13 +10,19 @@ import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
+import ru.zzemlyanaya.takibot.data.dao.EntryDao;
 import ru.zzemlyanaya.takibot.data.dao.HabitDao;
 import ru.zzemlyanaya.takibot.data.dao.UserDao;
+import ru.zzemlyanaya.takibot.data.model.Entry;
 import ru.zzemlyanaya.takibot.data.model.Habit;
 import ru.zzemlyanaya.takibot.data.model.User;
+import ru.zzemlyanaya.takibot.domain.mapper.DBModelMapper;
+import ru.zzemlyanaya.takibot.domain.model.EntryEntity;
 import ru.zzemlyanaya.takibot.domain.model.HabitEntity;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -30,6 +37,7 @@ public class TakiDbServiceTests {
     private static final TakiDbServiceTestImpl service = TakiDbServiceTestImpl.INSTANCE;
     private static final HabitDao habitDao = new HabitDaoTestImpl();
     private static final UserDao userDao = new UserDaoTestImpl();
+    private static final EntryDao entryDao = new EntryDaoTestImpl();
 
     private static final CompositeDisposable disposable = new CompositeDisposable();
 
@@ -44,6 +52,7 @@ public class TakiDbServiceTests {
     public static void dropUsersTable() throws IOException {
         userDao.dropTable();
         habitDao.dropTable();
+        entryDao.dropTable();
         disposable.dispose();
     }
 
@@ -128,6 +137,52 @@ public class TakiDbServiceTests {
                     for (int i = 0; i < habits.size(); i++) {
                         assertEquals(expected.get(i).getName(), habits.get(i).getName());
                     }
+                })
+        );
+    }
+
+    @ParameterizedTest(name = "select by date: {0}")
+    @MethodSource("data.providers.HabitTestProvider#provideTestsHabitSelectByUserAndDate")
+    @Order(7)
+    public void getHabitsByUserAndDate(Long id, String date, List<Habit> expected) throws IOException {
+        disposable.add(
+            service.getHabitsByUserAndDate(id, LocalDate.parse(date, DateTimeFormatter.ISO_DATE))
+                .doOnError(log::error)
+                .subscribe(habits -> {
+                    for (int i = 0; i < habits.size(); i++) {
+                        assertEquals(expected.get(i).getUserId(), habits.get(i).getUserId());
+                        assertEquals(expected.get(i).getName(), habits.get(i).getName());
+                    }
+                })
+        );
+    }
+
+    // ------ Entries ------
+
+    @ParameterizedTest(name = "entry insert: {index}")
+    @MethodSource("data.providers.EntryTestProvider#provideTestsEntrySave")
+    @Order(8)
+    public void insertEntries(EntryEntity entry) throws IOException {
+        disposable.add(
+            service.saveEntry(entry).doOnError(log::error).subscribe()
+        );
+    }
+
+    @ParameterizedTest(name = "entry update: {0}")
+    @MethodSource("data.providers.EntryTestProvider#provideTestsEntryUpdate")
+    @Order(9)
+    public void updateEntries(Long id, Long newAchieved, Entry expected) throws IOException {
+        EntryEntity entry = DBModelMapper.mapEntryEntity(entryDao.selectById(id));
+        entry.setAchieved(newAchieved);
+
+        disposable.add(
+            service.updateEntry(entry)
+                .doOnError(log::error)
+                .subscribe(() -> {
+                    Entry newEntry = entryDao.selectById(id);
+
+                    assertEquals(expected.getDate(), newEntry.getDate());
+                    assertEquals(expected.getAchieved(), newEntry.getAchieved());
                 })
         );
     }

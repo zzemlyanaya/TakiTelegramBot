@@ -4,16 +4,17 @@ package ru.zzemlyanaya.takibot.data.model;
 
 
 public class Habit {
-    Long id;
-    Long userId;
-    String name;
-    String prompt;
-    Boolean isBinary;
-    int frequency;
-    String metric;
-    double metricGoal;
+    private Long id;
+    private Long userId;
+    private String name;
+    private String prompt;
+    private Boolean isBinary;
+    private int frequency;
+    private String metric;
+    private double metricGoal;
+    private String nextDate;
 
-    public Habit(Long id, Long userId, String name, String prompt, Boolean isBinary, int frequency, String metric, double metricGoal) {
+    public Habit(Long id, Long userId, String name, String prompt, Boolean isBinary, int frequency, String metric, double metricGoal,String nextDate) {
         this.id = id;
         this.userId = userId;
         this.name = name;
@@ -22,9 +23,10 @@ public class Habit {
         this.frequency = frequency;
         this.metric = metric;
         this.metricGoal = metricGoal;
+        this.nextDate = nextDate;
     }
 
-    public Habit(Long userId, String name, String prompt, Boolean isBinary, int frequency, String metric, double metricGoal) {
+    public Habit(Long userId, String name, String prompt, Boolean isBinary, int frequency, String metric, double metricGoal, String nextDate) {
         this.userId = userId;
         this.name = name;
         this.prompt = prompt;
@@ -32,12 +34,26 @@ public class Habit {
         this.frequency = frequency;
         this.metric = metric;
         this.metricGoal = metricGoal;
+        this.nextDate = nextDate;
+    }
+
+    public Habit(Long id, Long userId, String name, String nextDate) {
+        this.id = id;
+        this.userId = userId;
+        this.name = name;
+        this.nextDate = nextDate;
     }
 
     public Habit(Long id, Long userId, String name) {
         this.id = id;
         this.userId = userId;
         this.name = name;
+    }
+
+    public Habit(Long userId, String name, String nextDate) {
+        this.userId = userId;
+        this.name = name;
+        this.nextDate = nextDate;
     }
 
     public Habit(Long userId, String name) {
@@ -107,5 +123,13 @@ public class Habit {
 
     public void setMetricGoal(double metricGoal) {
         this.metricGoal = metricGoal;
+    }
+
+    public String getNextDate() {
+        return nextDate;
+    }
+
+    public void setNextDate(String nextDate) {
+        this.nextDate = nextDate;
     }
 }
