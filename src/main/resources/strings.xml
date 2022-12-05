@@ -29,7 +29,17 @@
     <entry key="CheckFlowSuccessMessage">Записали!</entry>
     <entry key="CheckFlowProgressMessage">Следите за вашим прогрессом в разделах “Сегодня” или “Статистика”</entry>
 
+    <entry key="TodayProgress">Твой прогресс за сегодня:\n</entry>
+    <entry key="TodayFinished">Выполнено\n</entry>
+    <entry key="TodayInProgress">В процессе\n</entry>
+    <entry key="TodayToDo">Будущие победы\n</entry>
+    <entry key="TodayProgressEmpty">Кажется, данных за сегодня нет. Внеси их в разделе "Отметить прогресс"!</entry>
 
-    <entry key="TodayFlowFirstMessage">This is TODAY ability!</entry>
-    <entry key="StatisticFlowFirstMessage">This is STATISTIC ability!</entry>
+    <entry key="StatisticChooseInterval">Выбери период для подсчёта статистики:</entry>
+    <entry key="1week">1 неделя</entry>
+    <entry key="1month">1 месяц</entry>
+    <entry key="3month">3 месяца</entry>
+    <entry key="StatisticFinal">Отмечай свой прогресс в разделе "Отметить прогресс", чтобы увидеть больше статистики!</entry>
+
+    <entry key="Loading">Загружаем...</entry>
 </properties>

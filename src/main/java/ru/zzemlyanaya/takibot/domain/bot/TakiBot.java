@@ -13,9 +13,6 @@ import ru.zzemlyanaya.takibot.domain.utils.Command;
 
 import java.util.ResourceBundle;
 
-import static org.telegram.abilitybots.api.objects.Locality.ALL;
-import static org.telegram.abilitybots.api.objects.Privacy.PUBLIC;
-
 /* created by zzemlyanaya on 05/10/2022 */
 
 public class TakiBot extends AbilityBot {
@@ -64,23 +61,11 @@ public class TakiBot extends AbilityBot {
     }
 
     public Ability showStatisticToday() {
-        return Ability
-            .builder()
-            .name(Command.TODAY.getName())
-            .locality(ALL)
-            .privacy(PUBLIC)
-            .action(ctx -> silent.send(res.getString("TodayFlowFirstMessage"), ctx.chatId()))
-            .build();
+        return handler.getHandler(Command.TODAY).startFlow();
     }
 
     public Ability showStatistic() {
-        return Ability
-            .builder()
-            .name(Command.STATISTIC.getName())
-            .locality(ALL)
-            .privacy(PUBLIC)
-            .action(ctx -> silent.send(res.getString("StatisticFlowFirstMessage"), ctx.chatId()))
-            .build();
+        return handler.getHandler(Command.STATISTIC).startFlow();
     }
 
 }

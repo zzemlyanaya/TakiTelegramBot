@@ -91,6 +91,16 @@ public class TakiDbServiceImpl implements TakiDbService {
         return entryRepository.updateEntry(entry);
     }
 
+    @Override
+    public Single<List<EntryEntity>> getTodayEntries(Long userId) {
+        return entryRepository.getTodayEntries(userId);
+    }
+
+    @Override
+    public Single<List<EntryEntity>> getEntriesBetween(Long userId, LocalDate startDate, LocalDate endDate) {
+        return entryRepository.getEntriesBetween(userId, startDate, endDate);
+    }
+
     // ------ Transactions ------
 
     public Completable runCheckTransaction(CheckModel checkModel) {

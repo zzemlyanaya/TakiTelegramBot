@@ -79,4 +79,19 @@ public class KeyboardFactory {
 
         return keyboardMarkup;
     }
+
+    public static ReplyKeyboard getStatisticIntervalKeyboard() {
+        ReplyKeyboardMarkup keyboardMarkup = new ReplyKeyboardMarkup();
+        keyboardMarkup.setOneTimeKeyboard(true);
+
+        List<KeyboardRow> keyboard = new ArrayList<>();
+        STATISTIC_INTERVAL_BUTTONS.forEach(btn -> {
+            KeyboardRow row = new KeyboardRow();
+            row.add(btn);
+            keyboard.add(row);
+        });
+        keyboardMarkup.setKeyboard(keyboard);
+
+        return keyboardMarkup;
+    }
 }
