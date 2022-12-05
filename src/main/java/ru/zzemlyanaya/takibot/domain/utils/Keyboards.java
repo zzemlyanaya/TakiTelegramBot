@@ -24,4 +24,10 @@ public class Keyboards {
         ResourceProvider.getString("FrequencyEveryday"),
         ResourceProvider.getString("FrequencyOnceNDay")
     );
+
+    static final List<String> STATISTIC_INTERVAL_BUTTONS = List.of(
+        ResourceProvider.getString("1week"),
+        ResourceProvider.getString("1month"),
+        ResourceProvider.getString("3month")
+    );
 }

@@ -16,11 +16,12 @@
         <junit.version>5.9.1</junit.version>
         <mavenplugins.version>2.22.2</mavenplugins.version>
         <log4j.version>2.19.0</log4j.version>
-        <slf4j.version>2.0.3</slf4j.version>
+        <slf4j.version>2.0.5</slf4j.version>
         <commonstext.version>1.10.0</commonstext.version>
         <mybatis.version>3.5.11</mybatis.version>
-        <sqlite.jdbc.version>3.39.3.0</sqlite.jdbc.version>
+        <sqlite.jdbc.version>3.40.0.0</sqlite.jdbc.version>
         <rxjava3.version>3.1.5</rxjava3.version>
+        <jfreechart.version>1.5.3</jfreechart.version>
     </properties>
 
     <build>
@@ -64,6 +65,12 @@
             <version>${commonstext.version}</version>
         </dependency>
         <dependency>
+            <groupId>org.jfree</groupId>
+            <artifactId>jfreechart</artifactId>
+            <version>${jfreechart.version}</version>
+        </dependency>
+
+        <dependency>
             <groupId>org.xerial</groupId>
             <artifactId>sqlite-jdbc</artifactId>
             <version>${sqlite.jdbc.version}</version>
@@ -96,7 +103,7 @@
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-log4j12</artifactId>
+            <artifactId>slf4j-reload4j</artifactId>
             <version>${slf4j.version}</version>
         </dependency>
 
@@ -105,6 +112,11 @@
             <artifactId>junit-jupiter</artifactId>
             <version>${junit.version}</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>ru.zzemlyanaya.takibot</groupId>
+            <artifactId>TakiTelegramBot</artifactId>
+            <version>0.1</version>
         </dependency>
     </dependencies>
 

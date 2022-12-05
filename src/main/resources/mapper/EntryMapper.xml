@@ -29,6 +29,14 @@
         select * from entries where id = #{id} limit 1
     </select>
 
+    <select id="selectUserDay" resultType="Entry">
+        select * from entries where userId = #{id} and date = date(#{date})
+    </select>
+
+    <select id="selectUserBetween" resultType="Entry">
+        select * from entries where userId = #{id} and date between date(#{start}) and date(#{end})
+    </select>
+
     <update id="update">
         update entries set achieved = #{achieved} where userId = #{userId} and habitId = #{habitId} and date = #{date}
     </update>

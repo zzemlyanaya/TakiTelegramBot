@@ -32,6 +32,8 @@ public interface TakiDbService {
     // Entries
     Completable saveEntry(EntryEntity entry);
     Completable updateEntry(EntryEntity entry);
+    Single<List<EntryEntity>> getTodayEntries(Long userId);
+    Single<List<EntryEntity>> getEntriesBetween(Long userId, LocalDate startDate, LocalDate endDate);
 
     // Transactions
     Completable runCheckTransaction(CheckModel checkModel);

@@ -18,12 +18,16 @@ public class TelegramUpdateHandler implements UpdateHandler<Update> {
     private final MessageEventHandler messageHandler;
     private final AddHabitHandler addHabitHandler;
     private final CheckHabitHandler checkHabitHandler;
+    private final TodayHandler todayHandler;
+    private final StatisticHandler statisticHandler;
 
     public TelegramUpdateHandler(SilentSender silent, DBContext dbContext) {
         startHandler = new StartHandler(silent);
         messageHandler = new MessageEventHandler(silent);
         addHabitHandler = new AddHabitHandler(silent, dbContext);
         checkHabitHandler = new CheckHabitHandler(silent, dbContext);
+        todayHandler = new TodayHandler(silent, dbContext);
+        statisticHandler = new StatisticHandler(silent, dbContext);
     }
 
     @Override
@@ -48,9 +52,11 @@ public class TelegramUpdateHandler implements UpdateHandler<Update> {
         Stream.Builder<CoreHandler> builder = Stream.builder();
 
         return builder
-            .add(startHandler)
-            .add(addHabitHandler)
             .add(checkHabitHandler)
+            .add(addHabitHandler)
+            .add(todayHandler)
+            .add(statisticHandler)
+            .add(startHandler)
             .build();
     }
 }

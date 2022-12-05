@@ -67,4 +67,8 @@ public class DBModelMapper {
             entry.getAchieved()
         );
     }
+
+    public static List<EntryEntity> mapEntryEntities(List<Entry> entries) {
+        return entries.stream().map(DBModelMapper::mapEntryEntity).toList();
+    }
 }
